@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/07 20:21:49 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:43:52 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ typedef struct t_data
 	void	*win;
 	int		x;
 	int		y;
+	int		lines;
+	int		rows;
 }			t_data;
 
-t_map		**read_map(char *file_path);
+t_map		**read_map(t_data *fdf, char *file_path);
 void		set_map(t_map **map, char *line, int y);
-t_map		**alloc_map(char *file_path);
+t_map		**alloc_map(char *file_path, t_data *fdf);
 int			cnt_words(char *s, char c);
 int			get_height(int fd);
 
