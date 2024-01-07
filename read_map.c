@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/07 19:28:58 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:41:22 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	cnt_words(char *s, char c)
 	return (count);
 }
 
-t_map	**alloc_map(char *file_path)
+t_map	**alloc_map(char *file_path, t_data *fdf)
 {
 	int		fd;
 	int		x;
@@ -60,6 +60,8 @@ t_map	**alloc_map(char *file_path)
 	x = cnt_words(line, ' ');
 	free(line);
 	y = get_height(fd) + 1;
+	fdf->lines = y;
+	fdf->rows = x;
 	map = (t_map **)malloc(sizeof(t_map *) * (y + 1));
 	y--;
 	while (y >= 0)
@@ -88,14 +90,14 @@ void	set_map(t_map **map, char *line, int y)
 	}
 }
 
-t_map	**read_map(char *file_path)
+t_map	**read_map(t_data *fdf, char *file_path)
 {
 	t_map	**map;
 	int		fd;
 	char	*line;
 	int		y;
 
-	map = alloc_map(file_path);
+	map = alloc_map(file_path, fdf);
 	fd = open(file_path, O_RDONLY, 0);
 	y = 0;
 	line = get_next_line(fd);
