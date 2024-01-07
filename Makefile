@@ -1,6 +1,6 @@
 SRCS	=	get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c \
-			main.c
+			main.c read_map.c
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -16,7 +16,7 @@ LIBFTD	=	./Libft
 all: $(NAME)
 
 $(NAME): $(OBJS) $(MLXA) $(LIBFTA)
-	$(CC) $(OBJS) $(LIBFTA) -lmlx_Linux -L$(MLX) -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) -g $(OBJS) $(LIBFTA) -lmlx_Linux -L$(MLX) -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 $(MLXA):
 	make -C $(MLX)
