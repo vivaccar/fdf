@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/06 21:48:38 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/07 20:21:49 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,18 @@ typedef	struct s_maps
 	int	z;
 }			t_map;
 
-typedef struct circle
-{
-	int		x;
-	int		y;
-	int		rad;
-}			t_circle;
-
 typedef struct t_data
 {
 	void	*mlx;
 	void	*win;
-	int		line;
-	int		row;
+	int		x;
+	int		y;
 }			t_data;
+
+t_map		**read_map(char *file_path);
+void		set_map(t_map **map, char *line, int y);
+t_map		**alloc_map(char *file_path);
+int			cnt_words(char *s, char c);
+int			get_height(int fd);
 
 #endif

@@ -16,23 +16,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 } */
 
-void	put_color(t_data *screen, int color)
-{
-	int x;
-	int	y;
-	
-	y = 0;
-	while (y <= screen->row)
-	{
-		x = 0;
-		while (x <= screen->line)
-		{	
-			mlx_pixel_put(screen->mlx, screen->win, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
 
 int	mouse_move(int x, int y, void *param)
 {
@@ -58,65 +41,6 @@ int	mouse_click(int	button, int x, int y, void *param)
 	return (0);
 }
 
-void draw_circle(t_data *screen, int center_x, int center_y, int radius)
-{
-    int x = radius;
-    int y = 0;
-    int radius_error = 1 - x;
-
-    while (x >= y)
-    {
-        mlx_pixel_put(screen->mlx, screen->win, center_x + x, center_y - y, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x - x, center_y - y, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x - x, center_y + y, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x + x, center_y + y, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x + y, center_y - x, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x - y, center_y - x, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x - y, center_y + x, 0xFFFFFF);
-        mlx_pixel_put(screen->mlx, screen->win, center_x + y, center_y + x, 0xFFFFFF);
-
-        y++;
-        if (radius_error < 0)
-            radius_error += 2 * y + 1;
-        else
-        {
-            x--;
-            radius_error += 2 * (y - x) + 1;
-        }
-    }
-}
-
-int	keyup(int keycode, t_data *data)
-{
-	
-	t_circle	circle;
-
-	circle.x = data->line / 2;
-	circle.y = data->row / 2;
-	circle.rad = 50;
-	static int	x_cord = 750;
-	static int	y_cord = 500;
-	
-	if (keycode == XK_Escape)
-	{
-		mlx_destroy_window(data->mlx, data->win);
-		mlx_destroy_display(data->mlx);
-		exit(1);
-	}
-	if (keycode == XK_r)
-		put_color(data, 0xFF0000);
-	if (keycode == XK_b)
-		put_color(data, 0x0000FF);
-	if (keycode == XK_g)
-		put_color(data, 0x00FF00);
-	if (keycode == XK_w)
-	{
-		put_color(data, 0x000000);
-		draw_circle(data, x_cord, y_cord, circle.rad);
-		y_cord -= 5;
-	}
-	return (0);
-}
 int	main(void)
 {
 	t_data		screen;
