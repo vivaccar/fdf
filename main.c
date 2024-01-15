@@ -6,19 +6,28 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/07 23:12:59 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:54:10 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_color(int y, int x, t_data *screen, t_map **map)
+void draw_color(int y, int x, t_data *screen, t_map **map)
 {
-	if (map[y][x].z == 0)
-		mlx_pixel_put(screen->mlx, screen->win, x, y, 0xFF0000);
-	if (map[y][x].z > 0)
-		mlx_pixel_put(screen->mlx, screen->win, x, y, 0x0000FF);
+    int pixel_size = 12;
+
+    int center_x = (screen->x - (screen->rows * pixel_size)) / 2;
+    int center_y = (screen->y - (screen->lines * pixel_size)) / 2;
+
+    int real_x = x * pixel_size + center_x;
+    int real_y = y * pixel_size + center_y;
+	
+    if (map[y][x].z == 0)
+        mlx_pixel_put(screen->mlx, screen->win, real_x, real_y, 0xFF0000);
+    else
+        mlx_pixel_put(screen->mlx, screen->win, real_x, real_y, 0x00FF00);
 }
+
 
 void	draw_map(t_data *screen, t_map **map)
 {
@@ -49,14 +58,26 @@ int	keyup(int keycode, t_data *data)
 	return (0);
 }
 
+int	mouse_instructions(int button, int x, int y, t_data *fdf)
+{
+	(void) fdf;
+	if (button == 1)
+	{
+		printf("X: %i\nY: %i", x, y);
+		exit(1);
+	}
+	return(0);
+}
+
 void	open_window(t_map **map, t_data fdf)
 {
-	fdf.x = 1100;
-	fdf.y = 760;
+	fdf.x = 1500;
+	fdf.y = 850;
 	fdf.mlx = mlx_init();
 	fdf.win = mlx_new_window(fdf.mlx, fdf.x, fdf.y, "FdF");
 	draw_map(&fdf, map);
 	mlx_key_hook(fdf.win, keyup, &fdf);
+	mlx_mouse_hook(fdf.win, mouse_instructions, &fdf);
 	mlx_loop(fdf.mlx);
 }
 
@@ -68,7 +89,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		return (0);
 	map = read_map(&fdf, argv[1]);
-	printf("%i", fdf.rows);
+	printf("rows: %i\nlines: %i\n", fdf.rows, fdf.lines);
 	open_window(map, fdf);
 	return (0);
 /* 	int		fd;
