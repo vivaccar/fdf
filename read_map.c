@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/07 22:41:22 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/15 10:28:07 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ void	set_map(t_map **map, char *line, int y)
 	splited_line = ft_split(line, ' ');
 	while (splited_line[x])
 	{
+		if ((ft_isdigit(splited_line[x][0]) == 0))
+		{
+			write(1, "MAP_ERROR\n", 10);
+			exit(1);
+		}
 		map[y][x].x = x;
 		map[y][x].y = y;
 		map[y][x].z = ft_atoi(splited_line[x]);
