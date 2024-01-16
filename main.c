@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/16 12:31:22 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:31:09 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	draw_color(int x, int y, t_data *fdf, int map)
 {
-	(void) map;
     if (map == 0)
         my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
     else
@@ -89,13 +88,11 @@ t_point	get_points(int x, int y, t_data *fdf)
 	int	real_x;
 	int	real_y;	
 
-	pixel_size = 10;
+	pixel_size = 40;
 	center_x = (fdf->x - (fdf->rows * pixel_size)) / 2;
 	center_y = (fdf->y - (fdf->lines * pixel_size)) / 2;
 	real_x = x * pixel_size + center_x;
 	real_y = y * pixel_size + center_y;
-
-	printf("%i, %i", points.x, points.y);
 	points.x = real_x;
 	points.y = real_y;
 	return (points);
