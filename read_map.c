@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/15 10:28:07 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:06:49 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	cnt_words(char *s, char c)
 	return (count);
 }
 
-t_map	**alloc_map(char *file_path, t_data *fdf)
+int	**alloc_map(char *file_path, t_data *fdf)
 {
 	int		fd;
 	int		x;
 	int 	y;
 	char	*line;
-	t_map	**map;
+	int		**map;
 
 	fd = open(file_path, O_RDONLY, 0);
 	line = get_next_line(fd);
@@ -62,18 +62,18 @@ t_map	**alloc_map(char *file_path, t_data *fdf)
 	y = get_height(fd) + 1;
 	fdf->lines = y;
 	fdf->rows = x;
-	map = (t_map **)malloc(sizeof(t_map *) * (y + 1));
+	map = (int **)malloc(sizeof(int *) * (y + 1));
 	y--;
 	while (y >= 0)
 	{
-		map[y] = (t_map *)malloc(sizeof(t_map) * x + 1);
+		map[y] = (int *)malloc(sizeof(int) * x + 1);
 		y--;
 	}
 	close(fd);
 	return (map);
 }
 
-void	set_map(t_map **map, char *line, int y)
+void	set_map(int **map, char *line, int y)
 {
 	int		x;
 	char	**splited_line;
@@ -87,17 +87,15 @@ void	set_map(t_map **map, char *line, int y)
 			write(1, "MAP_ERROR\n", 10);
 			exit(1);
 		}
-		map[y][x].x = x;
-		map[y][x].y = y;
-		map[y][x].z = ft_atoi(splited_line[x]);
+		map[y][x] = ft_atoi(splited_line[x]);
 		free(splited_line[x]);
 		x++;
 	}
 }
 
-t_map	**read_map(t_data *fdf, char *file_path)
+int	**read_map(t_data *fdf, char *file_path)
 {
-	t_map	**map;
+	int		**map;
 	int		fd;
 	char	*line;
 	int		y;
