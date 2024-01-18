@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/15 12:06:49 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:22:14 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,31 @@ int	cnt_words(char *s, char c)
 	return (count);
 }
 
-int	**alloc_map(char *file_path, t_data *fdf)
+t_coords	**alloc_map(char *file_path)
 {
-	int		fd;
-	int		x;
-	int 	y;
-	char	*line;
-	int		**map;
+	int			fd;
+	int			x;
+	int 		y;
+	char		*line;
+	t_coords	**coords;
 
 	fd = open(file_path, O_RDONLY, 0);
 	line = get_next_line(fd);
 	x = cnt_words(line, ' ');
 	free(line);
 	y = get_height(fd) + 1;
-	fdf->lines = y;
-	fdf->rows = x;
-	map = (int **)malloc(sizeof(int *) * (y + 1));
+	coords = (t_coords**)malloc(sizeof(t_coords *) * (y + 1));
 	y--;
 	while (y >= 0)
 	{
-		map[y] = (int *)malloc(sizeof(int) * x + 1);
+		coords[y] = (t_coords *)malloc(sizeof(t_coords) * (x + 1));
 		y--;
 	}
 	close(fd);
-	return (map);
+	return (coords);
 }
 
-void	set_map(int **map, char *line, int y)
+void	set_coords(t_coords **coords, char *line, int y)
 {
 	int		x;
 	char	**splited_line;
@@ -82,51 +80,35 @@ void	set_map(int **map, char *line, int y)
 	splited_line = ft_split(line, ' ');
 	while (splited_line[x])
 	{
-		if ((ft_isdigit(splited_line[x][0]) == 0))
-		{
-			write(1, "MAP_ERROR\n", 10);
-			exit(1);
-		}
-		map[y][x] = ft_atoi(splited_line[x]);
+		coords[y][x].z = ft_atoi(splited_line[x]);
+		coords[y][x].color = 0;
 		free(splited_line[x]);
 		x++;
 	}
+	free(splited_line);
 }
 
-int	**read_map(t_data *fdf, char *file_path)
+t_coords	**read_file(char *file_path)
 {
-	int		**map;
-	int		fd;
-	char	*line;
-	int		y;
+	t_coords	**coords;
+	int			fd;
+	char		*line;
+	int			y;
 
-	map = alloc_map(file_path, fdf);
+	coords = alloc_map(file_path);
+	if (coords == NULL)
+		return (NULL);
 	fd = open(file_path, O_RDONLY, 0);
 	y = 0;
 	line = get_next_line(fd);
-	//int	cw = cnt_words(line, ' ');
 	while (line != NULL)
 	{
-		set_map(map, line, y);
+		set_coords(coords, line, y);
 		y++;
 		free(line);
 		line = get_next_line(fd);
 	}
-	map[y] = NULL;
+	coords[y] = NULL;
 	free(line);
-/* 	//return (map);
-	int	j;
-	int k = 0;
-	while (k < y)
-	{
-		j = 0;
-		while (j < cw)
-		{
-			printf("%3d", map[k][j].z);
-			j++;
-		}
-		printf("\n");
-		k++;
-	} */
-	return (map);
+	return (coords);
 }

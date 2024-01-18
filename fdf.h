@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/16 11:16:57 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:56:31 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,34 @@ typedef struct s_point
 	int	y;
 }			t_point;
 
-typedef struct s_img
+typedef struct	s_coords
 {
+	int	z;
+	int	color;
+}				t_coords;
+
+typedef struct s_fdf
+{
+	void	*mlx;
+	void	*win;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}			t_img;
+}				t_fdf;
 
-typedef struct t_data
+typedef struct s_map
 {
-	void	*mlx;
-	void	*win;
-	int		x;
-	int		y;
-	int		lines;
-	int		rows;
-	t_img	*img;
-}			t_data;
+	t_coords	**coords;
+	int			width;
+	int			heigth;
+}				t_map;
 
-int			**read_map(t_data *fdf, char *file_path);
-void		set_map(int **map, char *line, int y);
-int			**alloc_map(char *file_path, t_data *fdf);
+t_coords	**read_file(char *file_path);
+void		set_coords(t_coords **coords, char *line, int y);
+t_coords	**alloc_map(char *file_path);
+
 int			cnt_words(char *s, char c);
 int			get_height(int fd);
 
