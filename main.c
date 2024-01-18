@@ -6,19 +6,19 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/16 14:31:09 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:23:49 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	keyup(int keycode, t_data *data)
+/* int	keyup(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
 	{
 		mlx_destroy_display(data->mlx);
 		mlx_destroy_window(data->mlx, data->win);
-		exit(1);
+		return (0);
 	}
 	return (0);
 }
@@ -88,9 +88,9 @@ t_point	get_points(int x, int y, t_data *fdf)
 	int	real_x;
 	int	real_y;	
 
-	pixel_size = 40;
-	center_x = (fdf->x - (fdf->rows * pixel_size)) / 2;
-	center_y = (fdf->y - (fdf->lines * pixel_size)) / 2;
+	pixel_size = 30;
+	center_x = (fdf->x - (fdf->heigth * pixel_size)) / 2;
+	center_y = (fdf->y - (fdf->width * pixel_size)) / 2;
 	real_x = x * pixel_size + center_x;
 	real_y = y * pixel_size + center_y;
 	points.x = real_x;
@@ -107,50 +107,34 @@ void	draw_img(int **map, t_data fdf)
 	while (map[y] != NULL)
 	{
 		x = 0;
-		while (x < fdf.rows)
+		while (x < fdf.heigth)
 		{
-			if (x < fdf.rows - 1)
+			if (x < fdf.heigth - 1)
 				draw_line(get_points(x, y, &fdf), get_points(x + 1, y, &fdf), &fdf, map[y][x]);
-			if (y < fdf.lines - 1)
+			if (y < fdf.width - 1)
 				draw_line(get_points(x, y, &fdf), get_points(x, y + 1, &fdf), &fdf, map[y][x]);
 			x++;
 		}
 		y++;
 	}
-}
-
-void	open_window(int **map, t_data fdf)
-{	
-	fdf.img = malloc(sizeof(t_img));
-	fdf.x = 1500;
-	fdf.y = 850;
-	fdf.mlx = mlx_init();
-	fdf.win = mlx_new_window(fdf.mlx, fdf.x, fdf.y, "FdF");
-	fdf.img->img = mlx_new_image(fdf.mlx, fdf.x, fdf.y);
-	fdf.img->addr = mlx_get_data_addr(fdf.img->img, &fdf.img->bits_per_pixel, &fdf.img->line_length, &fdf.img->endian);
-	draw_img(map, fdf);
-	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img->img, 0, 0);
-	mlx_key_hook(fdf.win, keyup, &fdf);
-	mlx_mouse_hook(fdf.win, mouse_instructions, &fdf);
-	mlx_loop(fdf.mlx);
-}
+} */
 
 int	main(int argc, char *argv[])
 {
-	int		**map;
-	t_data	fdf;
-
-	if (argc != 2)
-		return (0);
-	map = read_map(&fdf, argv[1]);
-	printf("rows: %i\nlines: %i\n", fdf.rows, fdf.lines);
-	open_window(map, fdf);
-	return (0);
-/* 	int		fd;
-	char	*line;
+	t_coords	**coords;
+	(void) 		argc;
 	
-	line = NULL;
-	fd = open(argv[1], O_RDONLY, 0);
-	line = get_next_line(fd);
-	printf("%s", line); */
+	coords = read_file(argv[1]);
+	int	i = 0;
+	int	j;
+	while (i < 11)
+	{
+		j = 0;
+		while (j < 19)
+		{
+			printf("%i", coords[i][j].z);
+			j++;
+		}
+		i++;
+	}
 }
