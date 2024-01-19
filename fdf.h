@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 12:59:56 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:06:24 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_fdf
 	t_map		*map;
 }				t_fdf;
 
+// read
 t_coords	**read_file(char *file_path, t_map *map);
 void		set_coords(t_coords **coords, char *line, int y);
 t_coords	**alloc_map(char *file_path, t_map *map);
@@ -63,10 +64,14 @@ void		ft_error(char *str);
 int			cnt_words(char *s, char c);
 int			get_height(int fd);
 
+// init
 t_map		*init_map();
 t_fdf		*init_fdf(t_map *map);
 
+// keyboard
 int			keyup(int keycode, t_fdf *data);
+
+// mouse
 int			close_window(t_fdf *fdf);
 
 #endif
