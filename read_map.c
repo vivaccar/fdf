@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/18 14:22:14 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/19 09:28:20 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int	cnt_words(char *s, char c)
 	return (count);
 }
 
+void	ft_error(char *str)
+{
+	ft_putstr_fd(str, 1);
+	exit (1);
+}
+
 t_coords	**alloc_map(char *file_path)
 {
 	int			fd;
@@ -60,11 +66,14 @@ t_coords	**alloc_map(char *file_path)
 	x = cnt_words(line, ' ');
 	free(line);
 	y = get_height(fd) + 1;
-	coords = (t_coords**)malloc(sizeof(t_coords *) * (y + 1));
+	coords = NULL;
+	if(!(coords = (t_coords**)malloc(sizeof(t_coords *) * (y + 1))))
+		ft_error("COORDS_INIT_ERROR\n");
 	y--;
 	while (y >= 0)
 	{
-		coords[y] = (t_coords *)malloc(sizeof(t_coords) * (x + 1));
+		if (!(coords[y] = (t_coords *)malloc(sizeof(t_coords) * (x + 1))))
+			ft_error("COORDS_INIT_ERROR\n");
 		y--;
 	}
 	close(fd);
