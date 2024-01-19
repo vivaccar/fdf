@@ -6,51 +6,29 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 10:03:52 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:58:47 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/* int	keyup(int keycode, t_data *data)
-{
-	if (keycode == XK_Escape)
-	{
-		mlx_destroy_display(data->mlx);
-		mlx_destroy_window(data->mlx, data->win);
-		return (0);
-	}
-	return (0);
-}
-
-int	mouse_instructions(int button, int x, int y, t_data *fdf)
-{
-	(void) fdf;
-	if (button == 1)
-	{
-		printf("X: %i\nY: %i", x, y);
-		exit(1);
-	}
-	return (0);
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_fdf *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->img->addr + (y * data->img->line_length + x * (data->img->bits_per_pixel / 8));
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *) dst = color;
 }
 
-void	draw_color(int x, int y, t_data *fdf, int map)
+void	draw_color(int x, int y, t_fdf *fdf, int altitude)
 {
-    if (map == 0)
+    if (altitude == 0)
         my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
     else
     	my_mlx_pixel_put(fdf, x, y, 0x0000FF);
-}
+} 
 
-void	draw_line(t_point f, t_point s, t_data *fdf, int map)
+void	draw_line(t_point f, t_point s, t_fdf *fdf, int altitude)
 {
 	t_point	delta;
 	t_point	sign;
@@ -65,7 +43,7 @@ void	draw_line(t_point f, t_point s, t_data *fdf, int map)
 	cur = f;
 	while (cur.x != s.x || cur.y != s.y)
 	{
-		draw_color(cur.x, cur.y, fdf, map);
+		draw_color(cur.x, cur.y, fdf, altitude);
 		if ((error[1] = error[0] * 2) > -delta.y)
 		{
 			error[0] -= delta.y;
@@ -79,7 +57,7 @@ void	draw_line(t_point f, t_point s, t_data *fdf, int map)
 	}
 }
 
-t_point	get_points(int x, int y, t_data *fdf)
+t_point	get_points(int x, int y, t_fdf *fdf)
 {
 	t_point points;
 	int	pixel_size;
@@ -88,15 +66,15 @@ t_point	get_points(int x, int y, t_data *fdf)
 	int	real_x;
 	int	real_y;	
 
-	pixel_size = 30;
-	center_x = (fdf->x - (fdf->heigth * pixel_size)) / 2;
-	center_y = (fdf->y - (fdf->width * pixel_size)) / 2;
+	pixel_size = 10;
+	center_x = (WIDTH - (fdf->map->width * pixel_size)) / 2;
+	center_y = (HEIGHT - (fdf->map->heigth * pixel_size)) / 2;
 	real_x = x * pixel_size + center_x;
 	real_y = y * pixel_size + center_y;
 	points.x = real_x;
 	points.y = real_y;
 	return (points);
-} */
+}
 
 void	draw_img(t_fdf *fdf)
 {
@@ -104,31 +82,35 @@ void	draw_img(t_fdf *fdf)
 	int	y;
 
 	y = 0;
-	while (map[y] != NULL)
+	while (y < fdf->map->heigth)
 	{
 		x = 0;
-		while (x < fdf.heigth)
+		while (x < fdf->map->width)
 		{
-			if (x < fdf.heigth - 1)
-				draw_line(get_points(x, y, &fdf), get_points(x + 1, y, &fdf), &fdf, map[y][x]);
-			if (y < fdf.width - 1)
-				draw_line(get_points(x, y, &fdf), get_points(x, y + 1, &fdf), &fdf, map[y][x]);
+			if (x < fdf->map->width - 1)
+				draw_line(get_points(x, y, fdf), get_points(x + 1, y, fdf), fdf, fdf->map->coords[y][x].z);
+			if (y < fdf->map->heigth - 1)
+				draw_line(get_points(x, y, fdf), get_points(x, y + 1, fdf), fdf, fdf->map->coords[y][x].z);
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_coords	**coords;
 	t_map		*map;
 	t_fdf		*fdf;
 
 	if (argc != 2)
 		ft_error("INVALID_ARGUMENTS_NUMBER\n");
-	coords = read_file(argv[1]);
-	map = init_map(coords);
+	map = init_map();
+	map->coords = read_file(argv[1], map);
+	printf("Width: %i, Heigth: %i", map->width, map->heigth);
 	fdf = init_fdf(map);
 	draw_img(fdf);
+	mlx_hook(fdf->win, 2, 1L<<0, keyup, fdf);
+	mlx_hook(fdf->win, 17, 0, close_window, fdf);
+	mlx_loop(fdf->mlx);
 }

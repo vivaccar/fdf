@@ -6,20 +6,19 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 09:53:44 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:08:38 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map	*init_map(t_coords **coords)
+t_map	*init_map()
 {
 	t_map	*map;
 
 	map = NULL;
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		ft_error("INIT_MAP_ERROR\n");
-	map->coords = coords;
 	map->heigth = 0;
 	map->width = 0;
 	return (map);

@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 09:28:20 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:15:41 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_error(char *str)
 	exit (1);
 }
 
-t_coords	**alloc_map(char *file_path)
+t_coords	**alloc_map(char *file_path, t_map *map)
 {
 	int			fd;
 	int			x;
@@ -64,8 +64,10 @@ t_coords	**alloc_map(char *file_path)
 	fd = open(file_path, O_RDONLY, 0);
 	line = get_next_line(fd);
 	x = cnt_words(line, ' ');
+	map->width = x;
 	free(line);
 	y = get_height(fd) + 1;
+	map->heigth = y;
 	coords = NULL;
 	if(!(coords = (t_coords**)malloc(sizeof(t_coords *) * (y + 1))))
 		ft_error("COORDS_INIT_ERROR\n");
@@ -97,14 +99,14 @@ void	set_coords(t_coords **coords, char *line, int y)
 	free(splited_line);
 }
 
-t_coords	**read_file(char *file_path)
+t_coords	**read_file(char *file_path, t_map *map)
 {
 	t_coords	**coords;
 	int			fd;
 	char		*line;
 	int			y;
 
-	coords = alloc_map(file_path);
+	coords = alloc_map(file_path, map);
 	if (coords == NULL)
 		return (NULL);
 	fd = open(file_path, O_RDONLY, 0);
@@ -117,6 +119,7 @@ t_coords	**read_file(char *file_path)
 		free(line);
 		line = get_next_line(fd);
 	}
+	map->heigth = y;
 	coords[y] = NULL;
 	free(line);
 	return (coords);

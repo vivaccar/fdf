@@ -1,6 +1,6 @@
 SRCS	=	get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c \
-			main.c read_map.c initialize.c
+			main.c read_map.c initialize.c close.c
 
 OBJS	=	$(SRCS:.c=.o)
 
