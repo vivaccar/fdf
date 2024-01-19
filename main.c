@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/18 14:23:49 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:03:52 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ t_point	get_points(int x, int y, t_data *fdf)
 	points.x = real_x;
 	points.y = real_y;
 	return (points);
-}
+} */
 
-void	draw_img(int **map, t_data fdf)
+void	draw_img(t_fdf *fdf)
 {
 	int	x;
 	int	y;
@@ -117,24 +117,18 @@ void	draw_img(int **map, t_data fdf)
 		}
 		y++;
 	}
-} */
+}
 
 int	main(int argc, char *argv[])
 {
 	t_coords	**coords;
-	(void) 		argc;
-	
+	t_map		*map;
+	t_fdf		*fdf;
+
+	if (argc != 2)
+		ft_error("INVALID_ARGUMENTS_NUMBER\n");
 	coords = read_file(argv[1]);
-	int	i = 0;
-	int	j;
-	while (i < 11)
-	{
-		j = 0;
-		while (j < 19)
-		{
-			printf("%i", coords[i][j].z);
-			j++;
-		}
-		i++;
-	}
+	map = init_map(coords);
+	fdf = init_fdf(map);
+	draw_img(fdf);
 }
