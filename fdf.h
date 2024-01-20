@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 13:06:24 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/20 14:45:49 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 #include "get_next_line/get_next_line.h"
 #include "Libft/libft.h"
 
-# define HEIGHT 700
-# define WIDTH 1000
+# define HEIGHT 900
+# define WIDTH 1700
 
 typedef struct s_point
 {
@@ -73,5 +73,12 @@ int			keyup(int keycode, t_fdf *data);
 
 // mouse
 int			close_window(t_fdf *fdf);
+
+// draw
+void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
+void		draw_color(int x, int y, t_fdf *fdf, int altitude);
+void		draw_line(t_point f, t_point s, t_fdf *fdf, int altitude);
+t_point		get_points(int x, int y, t_fdf *fdf);
+void		draw_img(t_fdf *fdf);
 
 #endif
