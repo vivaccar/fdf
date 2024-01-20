@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/20 14:45:49 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:29:24 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,25 @@
 
 # define HEIGHT 900
 # define WIDTH 1700
+# define k_right 0xff53
+# define k_left 0xff51
+# define k_up 0xff52
+# define k_down 0xff54
+# define k_space 0x0020
+# define k_p 0x0070
 
 typedef struct s_point
 {
 	int	x;
 	int	y;
 }			t_point;
+
+typedef struct t_plus
+{
+	int	plus_x;
+	int	plus_y;
+	int	zoom;
+}			t_plus;
 
 typedef struct	s_coords
 {
@@ -78,7 +91,7 @@ int			close_window(t_fdf *fdf);
 void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
 void		draw_color(int x, int y, t_fdf *fdf, int altitude);
 void		draw_line(t_point f, t_point s, t_fdf *fdf, int altitude);
-t_point		get_points(int x, int y, t_fdf *fdf);
-void		draw_img(t_fdf *fdf);
+t_point		get_points(int x, int y, t_fdf *fdf, t_plus plus);
+void		draw_img(t_fdf *fdf, int plus_x, int plus_y, int zoom);
 
 #endif
