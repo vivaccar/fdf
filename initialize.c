@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 10:08:38 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/21 17:48:21 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,15 @@ t_fdf	*init_fdf(t_map *map)
 	fdf->addr = mlx_get_data_addr(fdf->img, &(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
 	fdf->map = map;
 	return (fdf);
+}
+
+t_proj	*init_proj()
+{
+	t_proj	*proj;
+
+	proj = (t_proj *)malloc(sizeof(t_proj));
+	proj->plus_x = 0;
+	proj->plus_y = 0;
+	proj->zoom = 0;
+	return (proj);
 }

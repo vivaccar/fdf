@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/20 17:29:24 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/21 18:13:03 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define k_down 0xff54
 # define k_space 0x0020
 # define k_p 0x0070
+# define k_z 0x007a
+# define k_x 0x0078
 
 typedef struct s_point
 {
@@ -37,12 +39,12 @@ typedef struct s_point
 	int	y;
 }			t_point;
 
-typedef struct t_plus
+typedef struct s_proj
 {
 	int	plus_x;
 	int	plus_y;
 	int	zoom;
-}			t_plus;
+}			t_proj;
 
 typedef struct	s_coords
 {
@@ -67,6 +69,7 @@ typedef struct s_fdf
 	int			line_length;
 	int			endian;
 	t_map		*map;
+	t_proj		*proj;
 }				t_fdf;
 
 // read
@@ -80,6 +83,7 @@ int			get_height(int fd);
 // init
 t_map		*init_map();
 t_fdf		*init_fdf(t_map *map);
+t_proj		*init_proj();
 
 // keyboard
 int			keyup(int keycode, t_fdf *data);
@@ -91,7 +95,7 @@ int			close_window(t_fdf *fdf);
 void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
 void		draw_color(int x, int y, t_fdf *fdf, int altitude);
 void		draw_line(t_point f, t_point s, t_fdf *fdf, int altitude);
-t_point		get_points(int x, int y, t_fdf *fdf, t_plus plus);
-void		draw_img(t_fdf *fdf, int plus_x, int plus_y, int zoom);
+t_point		get_points(int x, int y, t_fdf *fdf, t_proj *proj);
+void		draw_img(t_fdf *fdf, t_proj *proj);
 
 #endif

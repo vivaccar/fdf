@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/20 17:17:46 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/21 18:03:48 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	config_events(t_fdf *fdf)
 int	main(int argc, char *argv[])
 {
 	t_map		*map;
+	t_proj		*proj;
 	t_fdf		*fdf;
 
 	if (argc != 2)
@@ -29,7 +30,9 @@ int	main(int argc, char *argv[])
 	map->coords = read_file(argv[1], map);
 	printf("Width: %i, Heigth: %i", map->width, map->heigth);
 	fdf = init_fdf(map);
-	draw_img(fdf, 0, 0, 0);
+	proj = init_proj();
+	fdf->proj = proj;
+	draw_img(fdf, proj);
 	config_events(fdf);
 	mlx_loop(fdf->mlx);
 }
