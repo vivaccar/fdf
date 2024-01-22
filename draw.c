@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: vinivaccari <vinivaccari@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/21 18:28:59 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/22 10:59:29 by vinivaccari      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ void	my_mlx_pixel_put(t_fdf *data, int x, int y, int color)
 
 void	draw_color(int x, int y, t_fdf *fdf, int altitude)
 {	
-		if (altitude == 0)
-			my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
-		else
-			my_mlx_pixel_put(fdf, x, y, 0x000FFF);
+	(void) altitude;
+	if ((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
+		my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
 } 
 
 void	draw_line(t_point f, t_point s, t_fdf *fdf, int altitude)
@@ -71,9 +70,9 @@ t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 	center_y = (HEIGHT - (fdf->map->heigth * pixel_size)) / 2;
 	real_x = (x - y) * pixel_size + center_x;
 	real_y = (x + y) * pixel_size / 2 + center_y;
-	real_y -= fdf->map->coords[y][x].z * 2;
-	points.x = real_x + proj->plus_x;
-	points.y = real_y + proj->plus_y;
+	real_y = real_y - (fdf->map->coords[y][x].z * proj->scale);
+	points.x = (real_x + proj->plus_x);
+	points.y = (real_y + proj->plus_y);
 	return (points);
 }
 

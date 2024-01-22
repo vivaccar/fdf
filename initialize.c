@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: vinivaccari <vinivaccari@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/21 17:48:21 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/22 10:52:33 by vinivaccari      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_proj	*init_proj()
 	proj = (t_proj *)malloc(sizeof(t_proj));
 	proj->plus_x = 0;
 	proj->plus_y = 0;
-	proj->zoom = 0;
+	proj->zoom = 1;
+	proj->scale = 2;
 	return (proj);
 }
