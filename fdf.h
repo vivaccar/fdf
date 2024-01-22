@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: vinivaccari <vinivaccari@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/21 18:13:03 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:36:08 by vinivaccari      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@
 #include "get_next_line/get_next_line.h"
 #include "Libft/libft.h"
 
-# define HEIGHT 900
-# define WIDTH 1700
+# define HEIGHT 800
+# define WIDTH 1200
 # define k_right 0xff53
 # define k_left 0xff51
 # define k_up 0xff52
 # define k_down 0xff54
-# define k_space 0x0020
-# define k_p 0x0070
 # define k_z 0x007a
 # define k_x 0x0078
+# define k_n 0x006e
+# define k_m 0x006d
 
 typedef struct s_point
 {
@@ -44,6 +44,7 @@ typedef struct s_proj
 	int	plus_x;
 	int	plus_y;
 	int	zoom;
+	int	scale;
 }			t_proj;
 
 typedef struct	s_coords
