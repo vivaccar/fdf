@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:19:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/21 18:03:48 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:58:37 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int	main(int argc, char *argv[])
 		ft_error("INVALID_ARGUMENTS_NUMBER\n");
 	map = init_map();
 	map->coords = read_file(argv[1], map);
+	printf("%i", map->coords[0][0].color);
 	printf("Width: %i, Heigth: %i", map->width, map->heigth);
 	fdf = init_fdf(map);
-	proj = init_proj();
+	proj = init_proj(fdf);
 	fdf->proj = proj;
 	draw_img(fdf, proj);
 	config_events(fdf);

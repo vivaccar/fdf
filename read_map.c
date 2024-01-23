@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/19 10:15:41 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:56:17 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,24 @@ t_coords	**alloc_map(char *file_path, t_map *map)
 	return (coords);
 }
 
+int		get_color(char *line)
+{
+	char	**comma;
+	int		color;
+	
+	if (!(ft_strchr(line, ',')))
+		color = -1;
+	else
+	{
+		comma = ft_split(line, ',');
+		color = ft_atoi_base(&comma[1][2], 16);
+		free(comma[0]);
+		free(comma[1]);
+		free(comma);
+	}
+	return (color);
+}
+
 void	set_coords(t_coords **coords, char *line, int y)
 {
 	int		x;
@@ -92,7 +110,7 @@ void	set_coords(t_coords **coords, char *line, int y)
 	while (splited_line[x])
 	{
 		coords[y][x].z = ft_atoi(splited_line[x]);
-		coords[y][x].color = 0;
+		coords[y][x].color = get_color(splited_line[x]);
 		free(splited_line[x]);
 		x++;
 	}

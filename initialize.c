@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vinivaccari <vinivaccari@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/22 10:52:33 by vinivaccari      ###   ########.fr       */
+/*   Updated: 2024/01/23 13:31:06 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,31 @@ t_fdf	*init_fdf(t_map *map)
 	return (fdf);
 }
 
-t_proj	*init_proj()
+int	get_zoom(t_fdf *fdf)
+{
+	int	v1;
+	int	v2;
+
+	v1 = HEIGHT / fdf->map->heigth / 3;
+	v2 = WIDTH / fdf->map->width / 3;
+
+	if (v1 < 1 && v2 < 1)
+		return (1);
+	if (v1 > v2)
+		return (v2);
+	return (v1);
+}
+
+t_proj	*init_proj(t_fdf *fdf)
 {
 	t_proj	*proj;
+	(void) fdf;
 
-	proj = (t_proj *)malloc(sizeof(t_proj));
+	if (!(proj = (t_proj *)malloc(sizeof(t_proj))))
+		ft_error("INIT_PROJ_ERROR\n");
 	proj->plus_x = 0;
 	proj->plus_y = 0;
-	proj->zoom = 1;
-	proj->scale = 2;
+	proj->zoom = get_zoom(fdf);
+	proj->scale = proj->zoom;
 	return (proj);
 }
