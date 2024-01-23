@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vinivaccari <vinivaccari@student.42.fr>    +#+  +:+       +#+        */
+/*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/22 11:36:08 by vinivaccari      ###   ########.fr       */
+/*   Updated: 2024/01/23 12:05:20 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 #include "get_next_line/get_next_line.h"
 #include "Libft/libft.h"
 
-# define HEIGHT 800
-# define WIDTH 1200
+# define HEIGHT 1080
+# define WIDTH 1900
 # define k_right 0xff53
 # define k_left 0xff51
 # define k_up 0xff52
@@ -32,6 +32,7 @@
 # define k_x 0x0078
 # define k_n 0x006e
 # define k_m 0x006d
+# define k_r 0x0072
 
 typedef struct s_point
 {
@@ -84,7 +85,7 @@ int			get_height(int fd);
 // init
 t_map		*init_map();
 t_fdf		*init_fdf(t_map *map);
-t_proj		*init_proj();
+t_proj		*init_proj(t_fdf *fdf);
 
 // keyboard
 int			keyup(int keycode, t_fdf *data);
@@ -98,5 +99,10 @@ void		draw_color(int x, int y, t_fdf *fdf, int altitude);
 void		draw_line(t_point f, t_point s, t_fdf *fdf, int altitude);
 t_point		get_points(int x, int y, t_fdf *fdf, t_proj *proj);
 void		draw_img(t_fdf *fdf, t_proj *proj);
+
+//atoi base
+char		to_lower(char c);
+int 		get_digit(char c, int digits_in_base);
+int 		ft_atoi_base(const char *str, int str_base);
 
 #endif
