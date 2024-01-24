@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/23 13:31:06 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:47:52 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ t_map	*init_map()
 		ft_error("INIT_MAP_ERROR\n");
 	map->heigth = 0;
 	map->width = 0;
+	map->default_color = 1;
+	map->high = INT_MIN;
+	map->low = INT_MAX;
 	return (map);
 }
 
@@ -63,6 +66,6 @@ t_proj	*init_proj(t_fdf *fdf)
 	proj->plus_x = 0;
 	proj->plus_y = 0;
 	proj->zoom = get_zoom(fdf);
-	proj->scale = proj->zoom;
+	proj->scale = 1;
 	return (proj);
 }

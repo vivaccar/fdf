@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/23 09:56:17 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:48:35 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_coords	**alloc_map(char *file_path, t_map *map)
 	return (coords);
 }
 
-int		get_color(char *line)
+int		get_color(char *line, t_map *map)
 {
 	char	**comma;
 	int		color;
@@ -91,6 +91,8 @@ int		get_color(char *line)
 		color = -1;
 	else
 	{
+		if (map->default_color == 1)
+			map->default_color = 0;
 		comma = ft_split(line, ',');
 		color = ft_atoi_base(&comma[1][2], 16);
 		free(comma[0]);
@@ -100,7 +102,15 @@ int		get_color(char *line)
 	return (color);
 }
 
-void	set_coords(t_coords **coords, char *line, int y)
+void	set_high_low(t_map *map, int z)
+{
+	if (z > map->high)
+		map->high = z;
+	if (z < map->low)
+		map->low = z;
+}
+
+void	set_coords(t_coords **coords, char *line, int y, t_map *map)
 {
 	int		x;
 	char	**splited_line;
@@ -110,7 +120,8 @@ void	set_coords(t_coords **coords, char *line, int y)
 	while (splited_line[x])
 	{
 		coords[y][x].z = ft_atoi(splited_line[x]);
-		coords[y][x].color = get_color(splited_line[x]);
+		set_high_low(map, coords[y][x].z);
+		coords[y][x].color = get_color(splited_line[x], map);
 		free(splited_line[x]);
 		x++;
 	}
@@ -132,7 +143,7 @@ t_coords	**read_file(char *file_path, t_map *map)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		set_coords(coords, line, y);
+		set_coords(coords, line, y, map);
 		y++;
 		free(line);
 		line = get_next_line(fd);
