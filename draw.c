@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/23 13:33:32 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:10:21 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,42 @@ void	my_mlx_pixel_put(t_fdf *data, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-void	draw_color(int x, int y, t_fdf *fdf, int color)
+int 	get_default_color(t_fdf *fdf, t_coords coords)
+{
+	int	div;
+	int color;
+
+	color = 0x0000FF;
+	if (coords.z == 0)
+		return (0xFFFFFF);
+	div = fdf->map->high / coords.z;
+	if (div > fdf->map->high / 2)
+		color = 0x0000FF;
+	if (div > fdf->map->high / 3)
+		color = 0x000FFF;
+	return (color);
+}
+
+void	draw_color(int x, int y, t_fdf *fdf, t_coords coords)
 {	
 	if ((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
 	{
-		if (color != -1)
-			my_mlx_pixel_put(fdf, x, y, color);
+		if (fdf->map->default_color == 1)
+		{
+			coords.color = get_default_color(fdf, coords);
+			my_mlx_pixel_put(fdf, x, y, coords.color);
+		}
 		else
-			my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
+		{
+			if (coords.color != -1)
+				my_mlx_pixel_put(fdf, x, y, coords.color);
+			else
+				my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
+		}
 	}
 } 
 
-void	draw_line(t_point f, t_point s, t_fdf *fdf, int color)
+void	draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords)
 {
 	t_point	delta;
 	t_point	sign;
@@ -46,7 +70,7 @@ void	draw_line(t_point f, t_point s, t_fdf *fdf, int color)
 	cur = f;
 	while (cur.x != s.x || cur.y != s.y)
 	{
-		draw_color(cur.x, cur.y, fdf, color);
+		draw_color(cur.x, cur.y, fdf, coords);
 		if ((error[1] = error[0] * 2) > -delta.y)
 		{
 			error[0] -= delta.y;
@@ -63,20 +87,21 @@ void	draw_line(t_point f, t_point s, t_fdf *fdf, int color)
 t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 {
 	t_point points;
-	int	pixel_size;
-	int	center_x;
-	int	center_y;
-	int	real_x;
-	int	real_y;	
-
-	pixel_size = proj->zoom;
-	center_x = (WIDTH - (fdf->map->width * pixel_size)) / 2;
-	center_y = (HEIGHT - (fdf->map->heigth * pixel_size)) / 2;
-	real_x = (x - y) * pixel_size + center_x;
-	real_y = (x + y) * pixel_size / 2 + center_y;
-	real_y = real_y - ((fdf->map->coords[y][x].z * 2) * (fdf->proj->scale));
-	points.x = (real_x + proj->plus_x);
-	points.y = (real_y + proj->plus_y);
+	int	prev_x;
+	int	prev_y;
+	
+	points.x = x * proj->zoom;
+	points.y = y * proj->zoom;
+	points.x -= (fdf->map->width * proj->zoom) / 2;
+	points.y -= (fdf->map->heigth * proj->zoom) / 2;
+	prev_x = points.x;
+	prev_y = points.y;
+	points.x = (prev_x - prev_y) * cos(0.523599);
+	points.y = - (fdf->map->coords[y][x].z * proj->scale) + (prev_x + prev_y) * sin(0.523599);
+	points.x += WIDTH / 2;
+	points.y += (HEIGHT + fdf->map->heigth * proj->zoom) / 3;
+	points.x += proj->plus_x;
+	points.y += proj->plus_y;
 	return (points);
 }
 
@@ -92,9 +117,9 @@ void	draw_img(t_fdf *fdf, t_proj *proj)
 		while (x < fdf->map->width)
 		{
 			if (x < fdf->map->width - 1)
-				draw_line(get_points(x, y, fdf, proj), get_points(x + 1, y, fdf, proj), fdf, fdf->map->coords[y][x].color);
+				draw_line(get_points(x, y, fdf, proj), get_points(x + 1, y, fdf, proj), fdf, fdf->map->coords[y][x]);
 			if (y < fdf->map->heigth - 1)
-				draw_line(get_points(x, y, fdf, proj), get_points(x, y + 1, fdf, proj), fdf, fdf->map->coords[y][x].color);
+				draw_line(get_points(x, y, fdf, proj), get_points(x, y + 1, fdf, proj), fdf, fdf->map->coords[y][x]);
 			x++;
 		}
 		y++;

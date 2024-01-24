@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/23 12:05:20 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:46:43 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 #include <X11/keysym.h>
 #include <fcntl.h>
 #include "get_next_line/get_next_line.h"
 #include "Libft/libft.h"
+#include <math.h>
 
 # define HEIGHT 1080
 # define WIDTH 1900
@@ -42,10 +44,10 @@ typedef struct s_point
 
 typedef struct s_proj
 {
-	int	plus_x;
-	int	plus_y;
-	int	zoom;
-	int	scale;
+	int		plus_x;
+	int		plus_y;
+	int		zoom;
+	int		scale;
 }			t_proj;
 
 typedef struct	s_coords
@@ -59,6 +61,9 @@ typedef struct s_map
 	t_coords	**coords;
 	int			width;
 	int			heigth;
+	int			default_color;
+	int			high;
+	int			low;
 }				t_map;
 
 typedef struct s_fdf
@@ -76,7 +81,7 @@ typedef struct s_fdf
 
 // read
 t_coords	**read_file(char *file_path, t_map *map);
-void		set_coords(t_coords **coords, char *line, int y);
+void		set_coords(t_coords **coords, char *line, int y, t_map *map);
 t_coords	**alloc_map(char *file_path, t_map *map);
 void		ft_error(char *str);
 int			cnt_words(char *s, char c);
@@ -95,10 +100,11 @@ int			close_window(t_fdf *fdf);
 
 // draw
 void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
-void		draw_color(int x, int y, t_fdf *fdf, int altitude);
-void		draw_line(t_point f, t_point s, t_fdf *fdf, int altitude);
+void	draw_color(int x, int y, t_fdf *fdf, t_coords coords);
+void		draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords);
 t_point		get_points(int x, int y, t_fdf *fdf, t_proj *proj);
 void		draw_img(t_fdf *fdf, t_proj *proj);
+int			get_zoom(t_fdf *fdf);
 
 //atoi base
 char		to_lower(char c);
