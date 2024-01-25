@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close.c                                            :+:      :+:    :+:   */
+/*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 12:57:55 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/25 10:04:44 by vivaccar         ###   ########.fr       */
+/*   Created: 2024/01/25 10:01:29 by vivaccar          #+#    #+#             */
+/*   Updated: 2024/01/25 10:12:29 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	close_window(t_fdf *fdf)
+int	press_mouse(int button, int x, int y, void *param)
 {
-	mlx_destroy_window(fdf->mlx, fdf->win);
-	exit (1);
+	t_fdf *fdf;
+	
+	(void)x;
+	(void)y;
+	fdf = (t_fdf *)param;
+	if (button == 1)
+		fdf->mouse = 1;
 	return (0);
 }
-void	exit_esc(t_fdf *fdf)
+
+int	release_mouse(int button, int x, int y, void *param)
 {
-	mlx_destroy_window(fdf->mlx, fdf->win);
-	exit (1);
+	t_fdf	*fdf;
+
+	fdf = (t_fdf *)param;
+	fdf->mouse = 0;
+	return (0);
 }
-
-
-
