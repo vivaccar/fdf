@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/24 14:10:21 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/25 09:55:36 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 	points.x = (prev_x - prev_y) * cos(0.523599);
 	points.y = - (fdf->map->coords[y][x].z * proj->scale) + (prev_x + prev_y) * sin(0.523599);
 	points.x += WIDTH / 2;
-	points.y += (HEIGHT + fdf->map->heigth * proj->zoom) / 3;
+	points.y += (HEIGHT + fdf->map->heigth * (proj->zoom)) / 3;
 	points.x += proj->plus_x;
 	points.y += proj->plus_y;
 	return (points);

@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/24 13:46:43 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:15:27 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ typedef struct s_proj
 	int		plus_y;
 	int		zoom;
 	int		scale;
+	double	alpha;
+	double	beta;
+	double	gama;
 }			t_proj;
 
 typedef struct	s_coords
@@ -77,6 +80,7 @@ typedef struct s_fdf
 	int			endian;
 	t_map		*map;
 	t_proj		*proj;
+	int			mouse;
 }				t_fdf;
 
 // read
@@ -97,6 +101,8 @@ int			keyup(int keycode, t_fdf *data);
 
 // mouse
 int			close_window(t_fdf *fdf);
+int			press_mouse(int button, int x, int y, void *param);
+int			release_mouse(int button, int x, int y, void *param);
 
 // draw
 void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
