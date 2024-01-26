@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/26 09:42:00 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:42:45 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define k_n 0x006e
 # define k_m 0x006d
 # define k_r 0x0072
+# define WHITE 0xFFFFFF
 
 typedef struct s_point
 {
@@ -52,7 +53,7 @@ typedef struct s_proj
 	double	cos;
 	double	gamma;
 	double	alpha;
-	double	beta;
+	int		view;
 }			t_proj;
 
 typedef struct	s_coords
@@ -97,6 +98,7 @@ int			get_height(int fd);
 t_map		*init_map();
 t_fdf		*init_fdf(t_map *map);
 t_proj		*init_proj(t_fdf *fdf);
+int			get_scale(int zoom);
 
 // keyboard
 int			keyup(int keycode, t_fdf *data);

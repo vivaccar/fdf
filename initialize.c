@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/26 09:42:07 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:07:51 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ t_proj	*init_proj(t_fdf *fdf)
 	proj->plus_y = 0;
 	proj->zoom = get_zoom(fdf);
 	printf("\n zoom: %i", proj->zoom);
-	proj->scale = get_scale(proj->zoom);
+	proj->scale = 1;
 	proj->cos = 0.523599;
 	proj->sin = 0.523599;
 	proj->gamma = 0;
 	proj->alpha = 0;
+	proj->view = 1;
 	return (proj);
 }
