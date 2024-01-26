@@ -1,7 +1,4 @@
-SRCS	=	get_next_line/get_next_line.c \
-			get_next_line/get_next_line_utils.c \
-			main.c read_map.c initialize.c close.c draw.c \
-			ft_atoi_base.c keyboard.c
+SRCS	=	$(wildcard $(shell find srcs -type f -name '*.c'))
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -11,8 +8,8 @@ CFLAGS	=	-Wall -Werror -Wextra
 NAME	=	fdf
 MLX		=	./minilibx-linux
 MLXA	=	$(MLX)/libmlx_Linux.a
-LIBFTA	=	./Libft/libft.a 
-LIBFTD	=	./Libft
+LIBFTA	=	./srcs/Libft/libft.a 
+LIBFTD	=	./srcs/Libft
 
 all: $(NAME)
 
