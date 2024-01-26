@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/25 09:55:36 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:39:25 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,17 @@ void	draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords)
 	}
 }
 
+void	rotate_z(int *x, int *y, double gamma)
+{
+	int previous_x;
+	int previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = previous_x * cos(gamma) - previous_y * sin(gamma);
+	*y = previous_x * sin(gamma) + previous_y * cos(gamma);
+}
+
 t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 {
 	t_point points;
@@ -94,10 +105,11 @@ t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 	points.y = y * proj->zoom;
 	points.x -= (fdf->map->width * proj->zoom) / 2;
 	points.y -= (fdf->map->heigth * proj->zoom) / 2;
+	rotate_z(&points.x, &points.y, proj->gamma);
 	prev_x = points.x;
 	prev_y = points.y;
-	points.x = (prev_x - prev_y) * cos(0.523599);
-	points.y = - (fdf->map->coords[y][x].z * proj->scale) + (prev_x + prev_y) * sin(0.523599);
+	points.x = (prev_x - prev_y) * cos(proj->cos);
+	points.y = - (fdf->map->coords[y][x].z * proj->scale) + (prev_x + prev_y) * sin(proj->sin + proj->alpha);
 	points.x += WIDTH / 2;
 	points.y += (HEIGHT + fdf->map->heigth * (proj->zoom)) / 3;
 	points.x += proj->plus_x;
