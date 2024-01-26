@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/25 10:16:26 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:42:07 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_fdf	*init_fdf(t_map *map)
 	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
 	fdf->addr = mlx_get_data_addr(fdf->img, &(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
 	fdf->map = map;
-	fdf->mouse = 0;
 	return (fdf);
 }
 
@@ -79,8 +78,9 @@ t_proj	*init_proj(t_fdf *fdf)
 	proj->zoom = get_zoom(fdf);
 	printf("\n zoom: %i", proj->zoom);
 	proj->scale = get_scale(proj->zoom);
+	proj->cos = 0.523599;
+	proj->sin = 0.523599;
+	proj->gamma = 0;
 	proj->alpha = 0;
-	proj->beta = 0;
-	proj->gama = 0;
 	return (proj);
 }

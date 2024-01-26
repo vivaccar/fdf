@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/25 10:15:27 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:42:00 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ typedef struct s_proj
 	int		plus_y;
 	int		zoom;
 	int		scale;
+	double	sin;
+	double	cos;
+	double	gamma;
 	double	alpha;
 	double	beta;
-	double	gama;
 }			t_proj;
 
 typedef struct	s_coords
@@ -99,14 +101,10 @@ t_proj		*init_proj(t_fdf *fdf);
 // keyboard
 int			keyup(int keycode, t_fdf *data);
 
-// mouse
-int			close_window(t_fdf *fdf);
-int			press_mouse(int button, int x, int y, void *param);
-int			release_mouse(int button, int x, int y, void *param);
 
 // draw
 void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
-void	draw_color(int x, int y, t_fdf *fdf, t_coords coords);
+void		draw_color(int x, int y, t_fdf *fdf, t_coords coords);
 void		draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords);
 t_point		get_points(int x, int y, t_fdf *fdf, t_proj *proj);
 void		draw_img(t_fdf *fdf, t_proj *proj);
@@ -116,5 +114,9 @@ int			get_zoom(t_fdf *fdf);
 char		to_lower(char c);
 int 		get_digit(char c, int digits_in_base);
 int 		ft_atoi_base(const char *str, int str_base);
+
+// exit
+int			close_window(t_fdf *fdf);
+void		exit_esc(t_fdf *fdf);
 
 #endif

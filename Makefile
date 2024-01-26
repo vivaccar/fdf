@@ -1,7 +1,7 @@
 SRCS	=	get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c \
 			main.c read_map.c initialize.c close.c draw.c \
-			ft_atoi_base.c keyboard.c mouse.c
+			ft_atoi_base.c keyboard.c
 
 OBJS	=	$(SRCS:.c=.o)
 
