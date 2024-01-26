@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/26 10:39:25 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:09:07 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,30 @@ t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 	rotate_z(&points.x, &points.y, proj->gamma);
 	prev_x = points.x;
 	prev_y = points.y;
-	points.x = (prev_x - prev_y) * cos(proj->cos);
-	points.y = - (fdf->map->coords[y][x].z * proj->scale) + (prev_x + prev_y) * sin(proj->sin + proj->alpha);
+	if (proj->view == 1)
+	{
+		points.x = (prev_x - prev_y) * cos(proj->cos);
+		points.y = - (fdf->map->coords[y][x].z * proj->scale) + (prev_x + prev_y) * sin(proj->sin + proj->alpha);
+	}
 	points.x += WIDTH / 2;
 	points.y += (HEIGHT + fdf->map->heigth * (proj->zoom)) / 3;
 	points.x += proj->plus_x;
 	points.y += proj->plus_y;
 	return (points);
+}
+
+void	put_events(t_fdf *fdf)
+{
+	int	y;
+
+	y = 20;
+	mlx_string_put(fdf->mlx, fdf->win, 20, y, WHITE, "ZOOM: +Z  / -X");
+	mlx_string_put(fdf->mlx, fdf->win, 20, y += 20, WHITE, "MOVE: up, down, right, left");
+	mlx_string_put(fdf->mlx, fdf->win, 20, y += 20, WHITE, "ROTATE: W, A, S, D");
+	mlx_string_put(fdf->mlx, fdf->win, 20, y += 20, WHITE, "RESET: R");
+	mlx_string_put(fdf->mlx, fdf->win, 20, y += 20, WHITE, "Z HEIGHT: -M  /  +N");
+	mlx_string_put(fdf->mlx, fdf->win, 20, y += 20, 0xFFFFFF, "PARALLEL VIEW: P");
+	mlx_string_put(fdf->mlx, fdf->win, 20, y += 20, 0xFFFFFF, "ISOMETRIC VIEW: I");
 }
 
 void	draw_img(t_fdf *fdf, t_proj *proj)
@@ -137,4 +154,5 @@ void	draw_img(t_fdf *fdf, t_proj *proj)
 		y++;
 	}
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
+	put_events(fdf);
 }
