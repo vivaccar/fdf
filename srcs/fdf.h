@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 16:08:58 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:20:42 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@
 # define K_N 0x006e
 # define K_M 0x006d
 # define K_R 0x0072
+# define K_P 0x0070
+# define K_I 0x0069
+# define K_W 0x0077
+# define K_A 0x0061
+# define K_S 0x0073
+# define K_D 0x0064
+# define K_SPACE 0x0020
+
 # define WHITE 0xFFFFFF
 # define BLUE 0x0000FF
 # define GREEN 0x00FF00
