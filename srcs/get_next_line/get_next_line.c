@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 10:58:10 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/06 22:03:41 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 11:09:37 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*text;
 
+	if (fd == -1)
+		free(text);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	text = ft_read(fd, text);
