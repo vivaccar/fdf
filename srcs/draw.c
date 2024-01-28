@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 16:55:58 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:46:07 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	my_mlx_pixel_put(t_fdf *data, int x, int y, int color)
 
 void	draw_color(int x, int y, t_fdf *fdf, t_coords coords)
 {
-	int color;
+	int	color;
 
 	color = fdf->proj->default_color;
-	if	((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
+	if ((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
 	{
 		if (fdf->map->default_color == 1)
 		{
@@ -44,6 +44,25 @@ void	draw_color(int x, int y, t_fdf *fdf, t_coords coords)
 	}
 }
 
+int	get_sign(int a, int b)
+{
+	int	result;
+
+	if (a < b)
+		result = 1;
+	else
+		result = -1;
+	return (result);
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	else
+		return (n);
+}
+
 void	draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords)
 {
 	t_point	delta;
@@ -51,16 +70,16 @@ void	draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords)
 	t_point	cur;
 	int		error[2];
 
-	delta.x = abs(s.x - f.x);
-	delta.y = abs(s.y - f.y);
-	sign.x = f.x < s.x ? 1 : -1;
-	sign.y = f.y < s.y ? 1 : -1;
+	delta = (t_point){ft_abs(s.x - f.x), ft_abs(s.y - f.y)};
+	sign.x = get_sign(f.x, s.x);
+	sign.y = get_sign(f.y, s.y);
 	error[0] = delta.x - delta.y;
 	cur = f;
 	while (cur.x != s.x || cur.y != s.y)
 	{
 		draw_color(cur.x, cur.y, fdf, coords);
-		if ((error[1] = error[0] * 2) > -delta.y)
+		error[1] = error[0] * 2;
+		if (error[1] > -delta.y)
 		{
 			error[0] -= delta.y;
 			cur.x += sign.x;
