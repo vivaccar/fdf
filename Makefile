@@ -1,4 +1,6 @@
-SRCS	=	$(wildcard $(shell find srcs -type f -name '*.c'))
+SRCS	=	srcs/close.c srcs/draw.c srcs/ft_atoi_base.c srcs/initialize.c \
+			srcs/keyboard.c srcs/main.c srcs/read_map.c srcs/utils.c \
+			srcs/get_next_line/get_next_line.c srcs/get_next_line/get_next_line_utils.c
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -13,7 +15,7 @@ LIBFTD	=	./srcs/Libft
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MLXA) $(LIBFTA)
+$(NAME): $(LIBFTA) $(MLXA) $(OBJS)
 	$(CC) -g $(OBJS) $(LIBFTA) -lmlx_Linux -L$(MLX) -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 $(MLXA):
@@ -34,5 +36,6 @@ fclean: clean
 	rm -f $(LIBFTA)
 
 re: fclean all
+
 
 	
