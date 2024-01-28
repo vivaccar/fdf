@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 10:04:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 16:22:00 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:47:06 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	keyup(int keycode, t_fdf *fdf)
 		zoom_img(fdf, keycode);
 	else if (keycode == K_M || keycode == K_N)
 		move_scale(fdf, keycode);
-	else if (keycode == K_R || keycode ==  K_P || keycode == K_I)
+	else if (keycode == K_R || keycode == K_P || keycode == K_I)
 		reset_img(fdf, keycode);
 	else if (keycode == K_W || keycode == K_A
 		|| keycode == K_S || keycode == K_D)

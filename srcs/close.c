@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:57:55 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 15:39:35 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:29:29 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	close_window(t_fdf *fdf)
 	mlx_destroy_image(fdf->mlx, fdf->img);
 	mlx_destroy_window(fdf->mlx, fdf->win);
 	mlx_destroy_display(fdf->mlx);
+	free(fdf);
+	free(fdf->map);
+	free(fdf->proj);
 	exit (0);
 	return (0);
 }
