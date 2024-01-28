@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 13:02:44 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 16:02:07 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 19:42:49 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,24 @@ int	cnt_words(char *s, char c)
 void	ft_error(char *str)
 {
 	ft_putstr_fd(str, 1);
-	exit (1);
+	exit (0);
+}
+
+int	get_sign(int a, int b)
+{
+	int	result;
+
+	if (a < b)
+		result = 1;
+	else
+		result = -1;
+	return (result);
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	else
+		return (n);
 }

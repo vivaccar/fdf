@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 17:46:07 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 20:12:06 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,9 @@ void	draw_color(int x, int y, t_fdf *fdf, t_coords coords)
 			if (coords.color != -1)
 				my_mlx_pixel_put(fdf, x, y, coords.color);
 			else
-				my_mlx_pixel_put(fdf, x, y, 0xFFFFFF + coords.z);
+				my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
 		}
 	}
-}
-
-int	get_sign(int a, int b)
-{
-	int	result;
-
-	if (a < b)
-		result = 1;
-	else
-		result = -1;
-	return (result);
-}
-
-int	ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
 }
 
 void	draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords)
@@ -92,17 +73,6 @@ void	draw_line(t_point f, t_point s, t_fdf *fdf, t_coords coords)
 	}
 }
 
-void	rotate_z(int *x, int *y, double gamma)
-{
-	int	previous_x;
-	int	previous_y;
-
-	previous_x = *x;
-	previous_y = *y;
-	*x = previous_x * cos(gamma) - previous_y * sin(gamma);
-	*y = previous_x * sin(gamma) + previous_y * cos(gamma);
-}
-
 t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 {
 	t_point	points;
@@ -127,29 +97,6 @@ t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 	points.x += proj->plus_x;
 	points.y += proj->plus_y;
 	return (points);
-}
-
-void	put_events(t_fdf *fdf)
-{
-	int	y;
-
-	y = 20;
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y, WHITE, "ZOOM: +Z  / -X");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "MOVE: up, down, right, left");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "ROTATE: W, A, S, D");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "RESET: R");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "Z HEIGHT: -M  /  +N");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "PARALLEL VIEW: P");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "ISOMETRIC VIEW: I");
-	mlx_string_put(fdf->mlx, fdf->win, 20,
-		y += 20, WHITE, "CHANGE COLOR: SPACE");
 }
 
 void	draw_img(t_fdf *fdf, t_proj *proj)

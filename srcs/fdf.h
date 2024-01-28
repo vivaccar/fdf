@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 16:20:42 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 20:29:27 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,19 @@ typedef struct s_fdf
 // read
 t_coords	**read_file(char *file_path, t_map *map);
 void		set_coords(t_coords **coords, char *line, int y, t_map *map);
-t_coords	**alloc_map(char *file_path, t_map *map);
+t_coords	**alloc_map(char *file_path);
 int			get_color(char *line, t_map *map);
 
 // utils
 void		ft_error(char *str);
 int			cnt_words(char *s, char c);
 int			get_height(int fd);
+int			get_sign(int a, int b);
+int			ft_abs(int n);
+
+//utils2
+void		rotate_z(int *x, int *y, double gamma);
+void		config_events(t_fdf *fdf);
 
 // init
 t_map		*init_map(void);
@@ -116,7 +122,12 @@ t_proj		*init_proj(t_fdf *fdf);
 int			get_scale(int zoom);
 
 // keyboard
-int			keyup(int keycode, t_fdf *data);
+void		change_color(t_fdf *fdf, int keycode);
+void		rotate_img(t_fdf *fdf, int keycode);
+void		zoom_img(t_fdf *fdf, int keycode);
+void		reset_img(t_fdf *fdf, int keycode);
+void		move_scale(t_fdf *fdf, int keycode);
+void		move_img(t_fdf *fdf, int keycode);
 
 // draw
 void		my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
@@ -134,5 +145,9 @@ int			ft_atoi_base(const char *str, int str_base);
 // exit
 int			close_window(t_fdf *fdf);
 void		exit_esc(t_fdf *fdf);
+
+//eventes
+void		put_events(t_fdf *fdf);
+int			keyup(int keycode, t_fdf *fdf);
 
 #endif
