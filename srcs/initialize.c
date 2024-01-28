@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 16:01:04 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/28 20:14:33 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,12 @@ int	get_zoom(t_fdf *fdf)
 
 int	get_scale(int zoom)
 {
-	if (zoom / 2 <= 2)
-		return (1);
-	else 
-		return (zoom / 2);
+	int	i;
+
+	i = 1;
+	if (zoom > 2)
+		i = 2;
+	return (i);
 }
 
 t_proj	*init_proj(t_fdf *fdf)
@@ -76,8 +78,7 @@ t_proj	*init_proj(t_fdf *fdf)
 	proj->plus_x = 0;
 	proj->plus_y = 0;
 	proj->zoom = get_zoom(fdf);
-	printf("\n zoom: %i", proj->zoom);
-	proj->scale = 1;
+	proj->scale = get_scale(proj->zoom);
 	proj->cos = 0.523599;
 	proj->sin = 0.523599;
 	proj->gamma = 0;

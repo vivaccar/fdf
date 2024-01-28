@@ -1,5 +1,6 @@
 SRCS	=	srcs/close.c srcs/draw.c srcs/ft_atoi_base.c srcs/initialize.c \
 			srcs/keyboard.c srcs/main.c srcs/read_map.c srcs/utils.c \
+			srcs/events.c srcs/utils2.c \
 			srcs/get_next_line/get_next_line.c srcs/get_next_line/get_next_line_utils.c
 
 OBJS	=	$(SRCS:.c=.o)
