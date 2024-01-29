@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 10:04:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 18:40:30 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:34:13 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ void	rotate_img(t_fdf *fdf, int keycode)
 	mlx_destroy_image(fdf->mlx, fdf->img);
 	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
 	if (keycode == K_W)
-		fdf->proj->alpha += 0.2;
+		fdf->proj->rotate += 0.2;
 	else if (keycode == K_A)
-		fdf->proj->gamma += 0.2;
+		fdf->proj->z_axis += 0.2;
 	else if (keycode == K_S)
-		fdf->proj->alpha -= 0.2;
+		fdf->proj->rotate -= 0.2;
 	else if (keycode == K_D)
-		fdf->proj->gamma -= 0.2;
+		fdf->proj->z_axis -= 0.2;
 	draw_img(fdf, fdf->proj);
 }
 
