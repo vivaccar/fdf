@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 17:58:46 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 20:55:27 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:49:59 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,6 @@ int	get_color(char *line, t_map *map)
 	return (color);
 }
 
-void	set_high_and_low(int z, t_map *map)
-{
-	if (z > map->high)
-		map->high = z;
-	if (z < map->low)
-		map->low = z;
-}
-
 void	set_coords(t_coords **coords, char *line, int y, t_map *map)
 {
 	int		x;
@@ -79,7 +71,6 @@ void	set_coords(t_coords **coords, char *line, int y, t_map *map)
 	while (splited_line[x])
 	{
 		coords[y][x].z = ft_atoi(splited_line[x]);
-		set_high_and_low(coords[y][x].z, map);
 		coords[y][x].color = get_color(splited_line[x], map);
 		free(splited_line[x]);
 		x++;

@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 11:15:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 20:29:27 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:41:41 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_proj
 	int		scale;
 	double	sin;
 	double	cos;
-	double	gamma;
-	double	alpha;
+	double	z_axis;
+	double	rotate;
 	int		view;
 	int		default_color;
 }			t_proj;
@@ -80,8 +80,6 @@ typedef struct s_map
 	int			width;
 	int			heigth;
 	int			default_color;
-	int			high;
-	int			low;
 }				t_map;
 
 typedef struct s_fdf
@@ -95,7 +93,6 @@ typedef struct s_fdf
 	int			endian;
 	t_map		*map;
 	t_proj		*proj;
-	int			mouse;
 }				t_fdf;
 
 // read
@@ -112,7 +109,7 @@ int			get_sign(int a, int b);
 int			ft_abs(int n);
 
 //utils2
-void		rotate_z(int *x, int *y, double gamma);
+void		rotate_z(int *x, int *y, double z_axis);
 void		config_events(t_fdf *fdf);
 
 // init

@@ -6,21 +6,21 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:41:10 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 18:43:53 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:13:29 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	rotate_z(int *x, int *y, double gamma)
+void	rotate_z(int *x, int *y, double z_axis)
 {
 	int	previous_x;
 	int	previous_y;
 
 	previous_x = *x;
 	previous_y = *y;
-	*x = previous_x * cos(gamma) - previous_y * sin(gamma);
-	*y = previous_x * sin(gamma) + previous_y * cos(gamma);
+	*x = previous_x * cos(z_axis) - previous_y * sin(z_axis);
+	*y = previous_x * sin(z_axis) + previous_y * cos(z_axis);
 }
 
 void	config_events(t_fdf *fdf)

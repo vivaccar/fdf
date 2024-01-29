@@ -14,11 +14,11 @@ MLXA	=	$(MLX)/libmlx_Linux.a
 LIBFTA	=	./srcs/Libft/libft.a 
 LIBFTD	=	./srcs/Libft
 
+
 all: $(NAME)
-
 $(NAME): $(LIBFTA) $(MLXA) $(OBJS)
-	$(CC) -g $(OBJS) $(LIBFTA) -lmlx_Linux -L$(MLX) -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
-
+	$(CC) $(OBJS) $(LIBFTA) -lmlx_Linux -L$(MLX) -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	@printf "\n%s\n\n" "💻 FDF COMPILED!";
 $(MLXA):
 	make -C $(MLX)
 
@@ -29,14 +29,10 @@ clean:
 	rm -f $(OBJS)
 	make clean -C $(LIBFTD)
 	make clean -C $(MLX)
-
+	@printf "\n%s\n\n" "FDF CLEANED  🪠!";
 fclean: clean
 	rm -f $(NAME)
-	make clean -C $(LIBFTD)
-	make clean -C $(MLX)
 	rm -f $(LIBFTA)
-
+	rm -f $(MLXA)
+	@printf "\n%s\n\n" ".a CLEANED  🪠!";
 re: fclean all
-
-
-	

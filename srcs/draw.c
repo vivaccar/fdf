@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:44:09 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 20:12:06 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 21:09:39 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ void	draw_color(int x, int y, t_fdf *fdf, t_coords coords)
 		if (fdf->map->default_color == 1)
 		{
 			if (coords.z == 0)
-				my_mlx_pixel_put(fdf, x, y, WHITE);
-			else
 				my_mlx_pixel_put(fdf, x, y, color);
+			else
+				my_mlx_pixel_put(fdf, x, y, color - 80);
 		}
 		else
 		{
 			if (coords.color != -1)
 				my_mlx_pixel_put(fdf, x, y, coords.color);
 			else
-				my_mlx_pixel_put(fdf, x, y, 0xFFFFFF);
+				my_mlx_pixel_put(fdf, x, y, WHITE);
 		}
 	}
 }
@@ -83,14 +83,14 @@ t_point	get_points(int x, int y, t_fdf *fdf, t_proj *proj)
 	points.y = y * proj->zoom;
 	points.x -= (fdf->map->width * proj->zoom) / 2;
 	points.y -= (fdf->map->heigth * proj->zoom) / 2;
-	rotate_z(&points.x, &points.y, proj->gamma);
+	rotate_z(&points.x, &points.y, proj->z_axis);
 	prev_x = points.x;
 	prev_y = points.y;
 	if (proj->view == 1)
 	{
-		points.x = (prev_x - prev_y) * cos(proj->cos);
+		points.x = (prev_x - prev_y) * cos(0.523599);
 		points.y = - (fdf->map->coords[y][x].z * proj->scale)
-			+ (prev_x + prev_y) * sin(proj->sin + proj->alpha);
+			+ (prev_x + prev_y) * sin(0.523599 + proj->rotate);
 	}
 	points.x += WIDTH / 2;
 	points.y += (HEIGHT + fdf->map->heigth * (proj->zoom)) / 3;

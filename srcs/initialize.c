@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:53:19 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 20:14:33 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:17:21 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_map	*init_map(void)
 	map->heigth = 0;
 	map->width = 0;
 	map->default_color = 1;
-	map->high = INT_MIN;
-	map->low = INT_MAX;
 	return (map);
 }
 
@@ -36,7 +34,7 @@ t_fdf	*init_fdf(t_map *map)
 	if (fdf == NULL)
 		ft_error("INIT_FDF_ERROR\n");
 	fdf->mlx = mlx_init(fdf->mlx);
-	fdf->win = mlx_new_window(fdf->mlx, WIDTH, HEIGHT, "Fdf");
+	fdf->win = mlx_new_window(fdf->mlx, WIDTH, HEIGHT, "fdf");
 	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
 	fdf->addr = mlx_get_data_addr(fdf->img, &(fdf->bits_per_pixel),
 			&(fdf->line_length), &(fdf->endian));
@@ -79,10 +77,8 @@ t_proj	*init_proj(t_fdf *fdf)
 	proj->plus_y = 0;
 	proj->zoom = get_zoom(fdf);
 	proj->scale = get_scale(proj->zoom);
-	proj->cos = 0.523599;
-	proj->sin = 0.523599;
-	proj->gamma = 0;
-	proj->alpha = 0;
+	proj->z_axis = 0;
+	proj->rotate = 0;
 	proj->view = 1;
 	proj->default_color = WHITE;
 	return (proj);

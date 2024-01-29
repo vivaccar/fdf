@@ -6,7 +6,7 @@
 /*   By: vivaccar <vivaccar@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 18:35:44 by vivaccar          #+#    #+#             */
-/*   Updated: 2024/01/28 21:05:32 by vivaccar         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:36:00 by vivaccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ void	reset_img(t_fdf *fdf, int keycode)
 	fdf->proj->plus_y = 0;
 	fdf->proj->zoom = get_zoom(fdf);
 	fdf->proj->scale = get_scale(fdf->proj->zoom);
-	fdf->proj->cos = 0.523599;
-	fdf->proj->sin = 0.523599;
-	fdf->proj->gamma = 0;
-	fdf->proj->alpha = 0;
+	fdf->proj->z_axis = 0;
+	fdf->proj->rotate = 0;
 	draw_img(fdf, fdf->proj);
 }
